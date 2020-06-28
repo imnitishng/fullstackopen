@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Statistics = (props) => {
-  if(props.stats.all === 0)
+const Statistics = ({text, value}) => {
     return (
-      <>
-        <p>No feedback given</p>
-      </>
+    <>
+      <p>{text} {value}</p>
+    </>
     )
-  else
-  return (
-  <>
-    <p>good {props.stats.good}</p>
-    <p>neutral {props.stats.neutral}</p>
-    <p>bad {props.stats.bad}</p>
-    <p>all {props.stats.all}</p>
-    <p>average {props.stats.avg}</p>
-    <p>positive {props.stats.positive}%</p>
-  </>
-  )
 }
+
+const Button = ({handleClick, text}) => (
+  <button onClick={handleClick}>{text}</button>
+)
 
 const App = () => {
   // save clicks of each button to own state
@@ -28,20 +20,24 @@ const App = () => {
   const [bad, setBad] = useState(0)
   const [allclicks, setAll] = useState(0)
   const [average, setAvg] = useState(0)
+  const [fb, setFeedback] = useState(0)
 
   const handleGood = () => {
+    setFeedback(fb+1)
     setAvg(average+1)
     setAll(allclicks+1)
     setGood(good+1)
   }
 
   const handleNeutral = () => {
+    setFeedback(fb+1)
     setAvg(average+0)
     setAll(allclicks+1)
     setNeutral(neutral+1)
   }
 
   const handleBad = () => {
+    setFeedback(fb+1)
     setAvg(average-1)
     setAll(allclicks+1)
     setBad(bad+1)
@@ -53,17 +49,25 @@ const App = () => {
     bad: bad,
     all: allclicks,
     avg: average/allclicks,
-    positive: good/allclicks*100
+    positive: good/allclicks*100,
+    feedback: fb
   }
   
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGood}>Good</button>
-      <button onClick={handleNeutral}>Neutral</button>
-      <button onClick={handleBad}>Bad</button>
+      <Button handleClick={handleGood} text={'good'}/>
+      <Button handleClick={handleNeutral} text={'neutral'}/>
+      <Button handleClick={handleBad} text={'bad'}/>
       <h1>statistics</h1>
-        <Statistics stats={stats}/>
+      <div>
+        <Statistics text='good' value={stats.good} />
+        <Statistics text='neutral' value={stats.neutral} />
+        <Statistics text='bad' value={stats.bad} />
+        <Statistics text='all' value={stats.all} />
+        <Statistics text='avg' value={stats.avg} />
+        <Statistics text='positive' value={stats.positive} />
+      </div>
     </div>
   )
 }
