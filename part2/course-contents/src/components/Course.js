@@ -12,10 +12,13 @@ const Name = ({parts}) => (
 )
 
 const Course = ({course}) => {
+  const total = course.parts.reduce((sum, tot) => (sum+tot.exercises), 0)
+  console.log(total)
   return (
     <>
       <h1>{course.name}</h1>
-      <Name parts={course.parts}/>
+      <Name parts={course.parts}/>      
+      <b>total of {total} exercises</b>
     </>
   )
 }
