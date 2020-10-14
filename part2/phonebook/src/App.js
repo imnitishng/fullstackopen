@@ -4,6 +4,7 @@ import Axios from 'axios'
 import Filter from './components/Filter'
 import AddNumber from './components/AddNumber'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import personService from './services/personService'
 
 const App = () => {
@@ -11,6 +12,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ searchTerm, setShow ] = useState('')
+  const [ alertMessage, setAlertMessage ] = useState(null)
+  const [ alertType, setAlertType ] = useState(0)
 
   const addEntry = (event) => {
     const oldEntry = persons.find(person => person.name === newName)
@@ -27,7 +30,16 @@ const App = () => {
             setPersons(persons.filter(person => person.name !== oldEntry.name).concat(personObject))
             setNewName('')
             setNewNumber('')
-          })        
+            setAlertType(0)
+            setAlertMessage(`Updated ${personObject.name}`)
+            setTimeout(() => {setAlertMessage(null)}, 5000)
+          })
+          .catch(error => {
+            setAlertType(1)
+            setAlertMessage(`Information of ${personObject.name} has already been removed from the server.`)
+            setTimeout(() => {setAlertMessage(null)}, 5000)
+            setPersons(persons.filter(person => person.id !== personObject.id))
+          })
       }
     }
     else {
@@ -43,7 +55,9 @@ const App = () => {
           setNewName('')
           setNewNumber('')
           setPersons(persons.concat(personObject))
-          // console.log(response)
+          setAlertType(0)
+          setAlertMessage(`Added ${personObject.name}`)
+          setTimeout(() => {setAlertMessage(null)}, 5000)
         })
     }
   }
@@ -95,6 +109,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={alertMessage} alertType={alertType}/>
+
       <Filter 
         searchTerm={searchTerm}
         handleSearch={handleSearch}
