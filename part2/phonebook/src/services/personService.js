@@ -5,6 +5,12 @@ const saveContact = newContact => {
     return axios.post(baseURL, newContact)
 }
 
+const deleteContact = (contactID) => {
+    const deleteURL = `${baseURL}/${contactID}`
+    return axios.delete(deleteURL)
+}
+
 export default { 
-    saveContact: saveContact
+    saveContact: saveContact,
+    deleteContact: deleteContact
   }
