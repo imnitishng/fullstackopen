@@ -1,10 +1,9 @@
 import React from 'react'
-import Axios from 'axios'
 
-const Country = ({country}) => {
+const Country = ({country, setCountry}) => {
   return (
     <>    
-      {country}<br/>
+      {country.name} <button onClick={() => setCountry(country.name)}> show </button> <br/>
     </>
   )
 }
@@ -34,15 +33,17 @@ const CountryDetails = ({country}) => {
   )
 }
 
-const Countries = ({countriesToShow}) => {
-  if (countriesToShow.length == 1)
+const Countries = ({countriesToShow, setCountry}) => {
+  if (countriesToShow.length === 1)
     return (
       <CountryDetails country={countriesToShow[0]}/>
     )
   else if (countriesToShow.length < 10)
     return (
       <>
-        {countriesToShow.map((val) => <Country key={val.numericCode} country={val.name} />)}
+        {countriesToShow.map((val) => <Country key={val.numericCode} 
+          country={val} 
+          setCountry={setCountry}/>)}
       </>
     )
   else if (countriesToShow.length > 10)

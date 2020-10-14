@@ -6,13 +6,12 @@ import Axios from 'axios';
 const  App = () => {
 
   const [country, setCountry] = useState('')
-  const [ allCountries, setCountries ] = useState([])
+  const [allCountries, setCountries] = useState([])
 
   const getCountriesHook = () => {
     Axios
     .get('https://restcountries.eu/rest/v2/all')
     .then(response => {
-      // console.log(response)
       setCountries(response.data)
     })
   }
@@ -36,6 +35,7 @@ const  App = () => {
       />
 
       <Countries
+        setCountry={setCountry}
         countriesToShow={countriesToShow}
       />
 
