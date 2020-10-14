@@ -11,13 +11,24 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ searchTerm, setShow ] = useState('')
-  // const [ deleteContactID, setDeleteID ] = useState(0)
 
   const addEntry = (event) => {
-    if(persons.find(person => person.name === newName)) {
-      alert(`${newName} already added to phonebook`)
-      setNewName('')
-      setNewNumber('')
+    const oldEntry = persons.find(person => person.name === newName)
+
+    if(oldEntry !== undefined) {
+      event.preventDefault()
+      if(window.confirm(`${newName} is already added to the phonebook, replace old with new?`)) {
+        const personObject = {...oldEntry, number: newNumber}      
+        console.log(personObject)  
+        personService
+          .updateContact(personObject)
+          .then(response => {
+            console.log(response)
+            setPersons(persons.filter(person => person.name !== oldEntry.name).concat(personObject))
+            setNewName('')
+            setNewNumber('')
+          })        
+      }
     }
     else {
       event.preventDefault()

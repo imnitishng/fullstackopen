@@ -10,7 +10,13 @@ const deleteContact = (contactID) => {
     return axios.delete(deleteURL)
 }
 
+const updateContact = (updatedContact) => {
+    const updateURL = `${baseURL}/${updatedContact.id}`
+    return axios.put(updateURL, updatedContact)
+}
+
 export default { 
     saveContact: saveContact,
-    deleteContact: deleteContact
+    deleteContact: deleteContact,
+    updateContact: updateContact
   }
