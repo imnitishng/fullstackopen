@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import Axios from 'axios'
+
 import Filter from './components/Filter'
 import AddNumber from './components/AddNumber'
 import Persons from './components/Persons'
-import Axios from 'axios'
+import personService from './services/personService'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -19,8 +21,8 @@ const App = () => {
     else {
       event.preventDefault()
       const personObject = {name: newName, number: newNumber}
-      Axios
-        .post('http://localhost:3001/persons', personObject)
+      personService
+        .saveContact(personObject)
         .then(response => {
           setNewName('')
           setNewNumber('')
