@@ -18,9 +18,15 @@ const App = () => {
     }
     else {
       event.preventDefault()
-      setPersons(persons.concat({name: newName, number: newNumber}))
-      setNewName('')
-      setNewNumber('')
+      const personObject = {name: newName, number: newNumber}
+      Axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          setNewName('')
+          setNewNumber('')
+          setPersons(persons.concat(personObject))
+          console.log(response)
+        })
     }
   }
 
