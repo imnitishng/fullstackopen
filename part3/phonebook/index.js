@@ -1,8 +1,12 @@
 const express = require('express')
-const { response, request } = require('express')
+const morgan = require('morgan')
+const { response } = require('express')
+
 const app = express()
 
 app.use(express.json())
+morgan.token('content', (req, res) => JSON.stringify(req.body))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 
 let persons = [
   {
@@ -54,7 +58,6 @@ const generateID = () => (
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-  console.log(request.body)
   if(!body.number) {
     response.status(400).json({
       error: "missing number"
