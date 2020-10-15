@@ -1,9 +1,11 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const { response } = require('express')
-
 const app = express()
 
+app.use(cors())
+app.use(express.static('build'))
 app.use(express.json())
 morgan.token('content', (req, res) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
@@ -36,9 +38,8 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-  response.send(
-    `Phonebook has info for ${persons.length} people\n\n${new Date()}`
-  )
+  const info = `Phonebook has info for ${persons.length} people ${new Date()}`
+  response.send(info)
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -50,6 +51,12 @@ app.get('/api/persons/:id', (request, response) => {
   else {
     response.status(404).end()
   }
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  const personID = Number(request.params.id)
+  persons = persons.filter(person => person.id != personID)
+  response.status(204).end()
 })
 
 const generateID = () => (
@@ -77,7 +84,7 @@ app.post('/api/persons', (request, response) => {
     }
     else {
       const person = {
-        id: generateID(),
+        id: body.id || generateID(),
         name: body.name,
         number: body.number
       }
@@ -87,7 +94,7 @@ app.post('/api/persons', (request, response) => {
   }
 })
 
-const PORT = 3301
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

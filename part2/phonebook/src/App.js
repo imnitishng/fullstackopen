@@ -99,7 +99,7 @@ const App = () => {
   const getPersonHook = () => {
     console.log('effect hook')
     Axios
-      .get('http://localhost:3001/persons')
+      .get('http://localhost:3001/api/persons')
       .then(response => {
         setPersons(response.data)
       })
