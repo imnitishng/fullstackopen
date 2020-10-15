@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const { response } = require('express')
 const app = express()
+
+const Person = require('./models/person')
 
 app.use(cors())
 app.use(express.static('build'))
@@ -10,31 +12,34 @@ app.use(express.json())
 morgan.token('content', (req, res) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 
-let persons = [
-  {
-    id: 1,
-    name: "Arto Hellas",
-    number: "040-123456"
-  },
-  {
-    id: 2,
-    name: "Ada Lovelace",
-    number: "39-44-123456"
-  },
-  {
-    id: 3,
-    name: "Dan Abramov",
-    number: "040-344322"
-  },
-  {
-    id: 4,
-    name: "Mary Poppendick",
-    number: "39-23-6423122"
-  }
-]
+// let persons = [
+//   {
+//     id: 1,
+//     name: "Arto Hellas",
+//     number: "040-123456"
+//   },
+//   {
+//     id: 2,
+//     name: "Ada Lovelace",
+//     number: "39-44-123456"
+//   },
+//   {
+//     id: 3,
+//     name: "Dan Abramov",
+//     number: "040-344322"
+//   },
+//   {
+//     id: 4,
+//     name: "Mary Poppendick",
+//     number: "39-23-6423122"
+//   }
+// ]
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({})
+    .then(result => {
+      response.json(result)      
+    })
 })
 
 app.get('/info', (request, response) => {
@@ -76,22 +81,17 @@ app.post('/api/persons', (request, response) => {
     })
   }
   else {
-    const nameAlreadyExist = persons.find(person => person.name === body.name)
-    if(nameAlreadyExist) {
-      response.status(400).json({
-        error: "name must be unique"
+    const person = new Person({
+      id: body.id || generateID(),
+      name: body.name,
+      number: body.number
+    })
+    person
+      .save()
+      .then(savedPerson => {
+        response.json(savedPerson)
       })
-    }
-    else {
-      const person = {
-        id: body.id || generateID(),
-        name: body.name,
-        number: body.number
-      }
-      persons = persons.concat(person)
-      response.json(person)
-    }
-  }
+  }  
 })
 
 const PORT = process.env.PORT || 3001

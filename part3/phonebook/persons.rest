@@ -1,10 +1,10 @@
-# GET http://localhost:3301/api/persons
-# GET http://localhost:3301/info
-# GET http://localhost:3301/api/persons/4
-# POST http://localhost:3301/api/persons
+GET http://localhost:3001/api/persons
+# GET http://localhost:3001/info
+# GET http://localhost:3001/api/persons/4
+# POST http://localhost:3001/api/persons
 # Content-Type: application/json
 
 # {
-#     "name": "Nitish Gupta",
+#     "name": "Nitish Gupta22",
 #     "number": 1234
 # }
