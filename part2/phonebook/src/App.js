@@ -46,8 +46,8 @@ const App = () => {
       event.preventDefault()
       const personObject = {
         name: newName, 
-        number: newNumber,
-        id: Math.floor(Math.random() * 101)}
+        number: newNumber
+      }
         
       personService
         .saveContact(personObject)

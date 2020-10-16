@@ -1,10 +1,18 @@
-GET http://localhost:3001/api/persons
+# GET http://localhost:3001/api/persons
 # GET http://localhost:3001/info
-# GET http://localhost:3001/api/persons/4
+# GET http://localhost:3001/api/persons/5f8809415c864a570525dd08
 # POST http://localhost:3001/api/persons
 # Content-Type: application/json
 
 # {
-#     "name": "Nitish Gupta22",
+#     "name": "Nitish Gupta",
 #     "number": 1234
 # }
+# DELETE http://localhost:3001/api/persons/234
+PUT http://localhost:3001/api/persons/5f887cc8ea4a524ee30ae1cc
+Content-Type: application/json
+
+{
+    "name": "Nitish Gupta",
+    "number": 455667
+}
