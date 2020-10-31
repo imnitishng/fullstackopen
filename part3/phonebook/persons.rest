@@ -8,11 +8,19 @@
 #     "name": "Nitish Gupta",
 #     "number": 1234
 # }
+
 # DELETE http://localhost:3001/api/persons/234
-PUT http://localhost:3001/api/persons/5f887cc8ea4a524ee30ae1cc
+# PUT http://localhost:3001/api/persons/5f887cc8ea4a524ee30ae1cc
+# Content-Type: application/json
+
+# {
+#     "name": "Nitish Gupta",
+#     "number": 455667
+# }
+PUT http://localhost:3001/api/persons/5f9d26fdf337d72b670ab4d5
 Content-Type: application/json
 
 {
-    "name": "Nitish Gupta",
-    "number": 455667
+    "name": "m",
+    "number": 12
 }
