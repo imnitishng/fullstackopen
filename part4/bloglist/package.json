@@ -15,11 +15,13 @@
   "author": "Nitish Gupta",
   "license": "ISC",
   "devDependencies": {
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jest": "^26.6.2",
     "mongoose": "^5.10.11",
+    "mongoose-unique-validator": "^2.0.3",
     "nodemon": "^2.0.6",
     "supertest": "^6.0.0"
   },

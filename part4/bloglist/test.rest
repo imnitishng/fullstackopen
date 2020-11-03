@@ -15,12 +15,20 @@
 #   "likes": 10
 # }
 # DELETE http://localhost:3001/api/blogs/5fa1794af285e3a34179da6c
-PUT http://localhost:3001/api/blogs/5fa17c5313b7f34d0054ed9a
+# PUT http://localhost:3001/api/blogs/5fa17c5313b7f34d0054ed9a
+# Content-Type: application/json
+
+# {
+#   "title": "First blog updated",
+#   "author": "Nitish",
+#   "url": "blogs/1",
+#   "likes": 10
+# }
+POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "title": "First blog updated",
-  "author": "Nitish",
-  "url": "blogs/1",
-  "likes": 10
+  "username": "gautam",
+  "name": "gautam",
+  "password": "gautam"
 }
