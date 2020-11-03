@@ -9,7 +9,7 @@ blogsRouter.get('/', (request, response) => {
       response.json(blogs)
     })
 })
-  
+
 blogsRouter.post('/', (request, response) => {
   const blog = new Blog(request.body)
   logger.info(blog)
@@ -19,5 +19,5 @@ blogsRouter.post('/', (request, response) => {
       response.status(201).json(result)
     })
 })
-  
+
 module.exports = blogsRouter
