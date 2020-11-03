@@ -35,10 +35,15 @@ const App = () => {
             setTimeout(() => {setAlertMessage(null)}, 5000)
           })
           .catch(error => {
-            setAlertType(1)
-            setAlertMessage(`Information of ${personObject.name} has already been removed from the server.`)
-            setTimeout(() => {setAlertMessage(null)}, 5000)
-            setPersons(persons.filter(person => person.id !== personObject.id))
+            if(error.response.status === 404) {
+              setAlertType(1)
+              setAlertMessage(`Information of ${personObject.name} has already been removed from the server.`)
+              setTimeout(() => {setAlertMessage(null)}, 5000)
+              setPersons(persons.filter(person => person.id !== personObject.id))
+            }
+            else if(error.response.status === 400) {
+              formValidationErrorMessage(error)
+            }
           })
       }
     }
@@ -59,6 +64,9 @@ const App = () => {
           setAlertMessage(`Added ${personObject.name}`)
           setTimeout(() => {setAlertMessage(null)}, 5000)
         })
+        .catch(error => {
+          formValidationErrorMessage(error)
+        })
     }
   }
 
@@ -75,6 +83,13 @@ const App = () => {
     }
   }
   
+  const formValidationErrorMessage = (error) => {
+    console.log(error.response.data)
+    setAlertType(1)
+    setAlertMessage(error.response.data.error)
+    setTimeout(() => {setAlertMessage(null)}, 5000)
+  }
+
   const handleChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
