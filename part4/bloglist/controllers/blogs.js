@@ -1,29 +1,43 @@
 const logger = require('../utils/logger')
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blogs')
+const User = require('../models/users')
 
-blogsRouter.get('/', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
+blogsRouter.get('/', async (request, response) => {
+  const blogs = await Blog
+    .find({}).populate('user', { username: 1, name: 1, id: 1 })
+
+  response.json(blogs)
 })
 
-blogsRouter.post('/', (request, response, next) => {
+blogsRouter.post('/', async (request, response, next) => {
   if(request.body.likes === undefined)
     request.body.likes = 0
 
-  const blog = new Blog(request.body)
+  let users = await User.find({})
+  users.map(user => user.toJSON())
+
+  const userForBlog = users[0]
+  const blog = new Blog({
+    title: request.body.title,
+    author: request.body.author,
+    name: request.body.name,
+    url: request.body.url,
+    likes: request.body.likes,
+    user: userForBlog.id
+  })
   logger.info(blog)
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
-    .catch(error =>
-      next(error)
-    )
+
+  try {
+    const savedBlog = await blog.save()
+
+    userForBlog.blogs = userForBlog.blogs.concat(savedBlog.id)
+    await userForBlog.save()
+
+    response.status(201).json(savedBlog)
+  } catch (error) {
+    next(error)
+  }
 })
 
 blogsRouter.delete('/:id', async (request, response, next) => {

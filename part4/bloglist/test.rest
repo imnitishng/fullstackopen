@@ -1,12 +1,12 @@
-# POST http://localhost:3001/api/blogs
-# Content-Type: application/json
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
 
-# {
-#   "title": "First blog",
-#   "author": "Nitish",
-#   "url": "blogs/1",
-#   "likes": 10
-# }
+{
+  "title": "blog with blogs part and user 2",
+  "author": "Nitish gupta",
+  "url": "blogs/1",
+  "likes": 10
+}
 # POST http://localhost:3001/api/blogs
 # Content-Type: application/json
 
@@ -24,11 +24,11 @@
 #   "url": "blogs/1",
 #   "likes": 10
 # }
-POST http://localhost:3001/api/users
-Content-Type: application/json
+# POST http://localhost:3001/api/users
+# Content-Type: application/json
 
-{
-  "username": "gauetam",
-  "name": "gautam",
-  "password": "2"
-}
+# {
+#   "username": "gauetam",
+#   "name": "gautam",
+#   "password": "2"
+# }

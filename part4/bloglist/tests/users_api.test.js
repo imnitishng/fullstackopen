@@ -18,17 +18,43 @@ beforeEach(async () => {
 describe('when some users already exist', () => {
 
   test('creating user with same username', async () => {
+    const usersAtStart = await helper.usersInDB()
     const user = {
       username: 'user1',
       name: 'user1',
       password: 'user1'
     }
 
-    await api
+    const result = await api
       .post('/api/users')
       .send(user)
       .expect(400)
       .expect('Content-Type', /application\/json/)
+
+    expect(result.body.error).toContain('`username` to be unique')
+
+    const usersAtEnd = await helper.usersInDB()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+  })
+
+  test('creating user password < 3 charachters', async () => {
+    const usersAtStart = await helper.usersInDB()
+    const user = {
+      username: 'user1',
+      name: 'user1',
+      password: '1'
+    }
+
+    const result = await api
+      .post('/api/users')
+      .send(user)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    expect(result.body.error).toContain('password must be more than 3 characters')
+
+    const usersAtEnd = await helper.usersInDB()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
   })
 })
 
