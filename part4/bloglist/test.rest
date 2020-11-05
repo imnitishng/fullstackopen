@@ -1,13 +1,13 @@
-POST http://localhost:3001/api/blogs
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhdXRhbSIsImlkIjoiNWZhMThlYWEwYTQ2MDFlMTk0ZGQ5ZjFmIiwiaWF0IjoxNjA0NTU5MDgxfQ.3xSbbvX1AF_Kpisfylzgn-LfcCjQ8PR84CGULY2p32Y
+# POST http://localhost:3001/api/blogs
+# Content-Type: application/json
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhdXRhbSIsImlkIjoiNWZhMThlYWEwYTQ2MDFlMTk0ZGQ5ZjFmIiwiaWF0IjoxNjA0NTU5MDgxfQ.3xSbbvX1AF_Kpisfylzgn-LfcCjQ8PR84CGULY2p32Y
 
-{
-  "title": "blog with token",
-  "author": "Gautam gupta",
-  "url": "blogs/1",
-  "likes": 10
-}
+# {
+#   "title": "blog with token",
+#   "author": "Gautam gupta",
+#   "url": "blogs/1",
+#   "likes": 10
+# }
 
 # POST http://localhost:3001/api/blogs
 # Content-Type: application/json
@@ -17,7 +17,9 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imdhd
 #   "likes": 10
 # }
 
-# DELETE http://localhost:3001/api/blogs/5fa1794af285e3a34179da6c
+DELETE http://localhost:3001/api/blogs/5fa3a0cb0c4d0e5214fa6a72
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhdXRhbSIsImlkIjoiNWZhMThlYWEwYTQ2MDFlMTk0ZGQ5ZjFmIiwiaWF0IjoxNjA0NTU5MDgxfQ.3xSbbvX1AF_Kpisfylzgn-LfcCjQ8PR84CGULY2p32Y
+
 # PUT http://localhost:3001/api/blogs/5fa17c5313b7f34d0054ed9a
 # Content-Type: application/json
 
