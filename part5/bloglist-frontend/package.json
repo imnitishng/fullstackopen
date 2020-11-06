@@ -1,24 +1,28 @@
 {
-  "name": "bloglist-frontend",
+  "name": "phonebook",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0",
+    "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.19.2",
-    "eslint": "^7.12.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.3.1"
+    "axios": "^0.20.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
+    "build:ui:server": "rm -rf build && npm run build --prod && cp -r build ../../../deployed/phonebook/",
+    "build:ui:local": "rm -rf build && npm run build --prod && cp -r build ../../part3/phonebook/",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && cd ../../../deployed/phonebook/ && git add . && git commit -m uibuild && npm run deploy", 
+    "server": "json-server -p3001 --watch db.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "eslint .",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -33,6 +37,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:3001"
+  }
 }
