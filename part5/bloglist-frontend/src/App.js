@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -61,6 +62,7 @@ const App = () => {
 
   const saveBlog = async (event) => {
     event.preventDefault()
+    noteFormRef.current.toggleVisibility()
     blogService.create(newBlog)
     setNewBlog({title: '', author: '', url: ''})
     setBlogs(blogs.concat(newBlog))
@@ -91,6 +93,8 @@ const App = () => {
       <button type="submit">create</button>
     </form>
   )
+
+  const noteFormRef = useRef()
 
   if(user === null) {
     return (
@@ -128,7 +132,9 @@ const App = () => {
       </p>
       
       <h2>create new</h2>
-      {blogForm()}
+      <Togglable buttonLabel="new note" ref={noteFormRef}>
+        {blogForm()}
+      </Togglable>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
