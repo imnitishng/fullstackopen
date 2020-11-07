@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
+
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
+
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -9,7 +12,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [ alertType, setAlertType ] = useState(0)
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -60,11 +62,9 @@ const App = () => {
     setUser(null)
   }
 
-  const saveBlog = async (event) => {
-    event.preventDefault()
+  const saveBlog = async (newBlog) => {
     noteFormRef.current.toggleVisibility()
     blogService.create(newBlog)
-    setNewBlog({title: '', author: '', url: ''})
     setBlogs(blogs.concat(newBlog))
     setAlertType(0)
     setErrorMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`)
@@ -72,27 +72,6 @@ const App = () => {
       setErrorMessage(null)
     }, 5000)
   }
-
-  const blogForm = () => (
-    <form onSubmit={saveBlog}>
-      title:<input 
-        type="text" 
-        value={newBlog.title} 
-        onChange={({target}) => setNewBlog({...newBlog, title: target.value})}
-      /><br/>
-      author:<input 
-        type="text" 
-        value={newBlog.author} 
-        onChange={({target}) => setNewBlog({...newBlog, author: target.value})}
-      /><br/>
-      url:<input
-        type="text" 
-        value={newBlog.url}
-        onChange={({target}) => setNewBlog({...newBlog, url: target.value})}
-      /><br/>
-      <button type="submit">create</button>
-    </form>
-  )
 
   const noteFormRef = useRef()
 
@@ -132,11 +111,11 @@ const App = () => {
       </p>
       
       <h2>create new</h2>
-      <Togglable buttonLabel="new note" ref={noteFormRef}>
-        {blogForm()}
+      <Togglable buttonLabel="create new blog" ref={noteFormRef}>
+        <BlogForm createBlog={saveBlog}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog}/>
       )}
     </div> 
   )
