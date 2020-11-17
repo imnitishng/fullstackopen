@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BlogDetails from './BlogDetails'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog, userLoggedIn }) => {
   const [visible, setVisible] = useState(false)
   const blogStyle = {
     paddingTop: 10,
@@ -26,7 +26,7 @@ const Blog = ({ blog, updateBlog }) => {
       </span>
       <span style={showWhenVisible}>
         <button onClick={toggleVisibility}>hide</button>
-        <BlogDetails blog={blog} updateBlog={updateBlog}/>
+        <BlogDetails blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} userLoggedIn={userLoggedIn}/>
       </span>
     </div>
   )
