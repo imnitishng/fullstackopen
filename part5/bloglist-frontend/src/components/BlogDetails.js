@@ -9,7 +9,6 @@ const BlogDetails = ({ blog, updateBlog, deleteBlog, userLoggedIn }) => {
     updateLikes(blog.likes)
   }
 
-
   const removeBlog = () => {
     deleteBlog(blog)
   }

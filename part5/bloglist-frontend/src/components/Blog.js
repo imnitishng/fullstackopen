@@ -18,16 +18,26 @@ const Blog = ({ blog, updateBlog, deleteBlog, userLoggedIn }) => {
     setVisible(!visible)
   }
 
+  const blogDetails = () => {
+    if(visible)
+      return (
+        <span style={showWhenVisible}>
+          <button onClick={toggleVisibility}>hide</button>
+          <BlogDetails blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} userLoggedIn={userLoggedIn}/>
+        </span>
+      )
+    else
+      return (
+        <span style={hideWhenVisible}>
+          <button onClick={toggleVisibility}>view</button>
+        </span>
+      )
+  }
+
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='abcd'>
       {blog.title} {blog.author}
-      <span style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>view</button>
-      </span>
-      <span style={showWhenVisible}>
-        <button onClick={toggleVisibility}>hide</button>
-        <BlogDetails blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} userLoggedIn={userLoggedIn}/>
-      </span>
+      {blogDetails()}
     </div>
   )
 }
