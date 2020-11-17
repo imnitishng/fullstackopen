@@ -73,6 +73,10 @@ const App = () => {
     }, 5000)
   }
 
+  const updateBlog = async (updatedBlog) => {
+    blogService.update(updatedBlog)
+  }
+
   const noteFormRef = useRef()
 
   if(user === null) {
@@ -115,7 +119,7 @@ const App = () => {
         <BlogForm createBlog={saveBlog}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog}/>
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
       )}
     </div> 
   )
