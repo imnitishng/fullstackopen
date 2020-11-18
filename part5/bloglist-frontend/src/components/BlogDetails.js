@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const BlogDetails = ({ blog, updateBlog, deleteBlog, userLoggedIn }) => {
-  const [likes, updateLikes] = useState(blog.likes)
 
   const addLike = () => {
-    blog = { ...blog, likes: likes+1 }
+    blog = { ...blog, likes: blog.likes+1 }
     updateBlog(blog)
-    updateLikes(blog.likes)
   }
 
   const removeBlog = () => {
@@ -17,9 +15,9 @@ const BlogDetails = ({ blog, updateBlog, deleteBlog, userLoggedIn }) => {
   const showForOwner = { display: userIsOwner ? '' : 'none' }
 
   return (
-    <div>
+    <div className='blogDetails'>
       {blog.url}<br/>
-      likes {likes}
+      likes {blog.likes}
       <button onClick={addLike}>like</button><br/>
       {blog.user.name}<br/>
       <span style={showForOwner}>

@@ -1,7 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent } from '@testing-library/react'
+import { prettyDOM } from '@testing-library/dom'
 import Blog from './Blog'
+import blogService from '../services/blogs'
 
 let blog, user
 describe('When blogs list is rendered', () => {
@@ -35,7 +37,6 @@ describe('When blogs list is rendered', () => {
   })
 
   test('URL and likes of blog are shown only after clicking "view" button', () => {
-
     const mockHandler = jest.fn()
     const component = render(
       <Blog blog={blog} userLoggedIn={user} deleteBlog={mockHandler} updateBlog={mockHandler}/>
@@ -46,5 +47,20 @@ describe('When blogs list is rendered', () => {
 
     expect(component.container).toHaveTextContent('test/blogs/1')
     expect(component.container).toHaveTextContent('11')
+  })
+
+  test('clicking "like" button for a blog works', () => {
+    const mockHandler = jest.fn()
+    const component = render(
+      <Blog blog={blog} userLoggedIn={user} deleteBlog={mockHandler} updateBlog={mockHandler}/>
+    )
+
+    const viewbutton = component.getByText('view')
+    fireEvent.click(viewbutton)
+
+    const likebutton = component.getByText('like')
+    fireEvent.click(likebutton)
+    fireEvent.click(likebutton)
+    expect(mockHandler).toHaveBeenCalledTimes(2)
   })
 })
