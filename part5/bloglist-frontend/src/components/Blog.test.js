@@ -1,9 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent } from '@testing-library/react'
-import { prettyDOM } from '@testing-library/dom'
 import Blog from './Blog'
-import blogService from '../services/blogs'
+import BlogForm from './BlogForm'
 
 let blog, user
 describe('When blogs list is rendered', () => {
@@ -62,5 +61,24 @@ describe('When blogs list is rendered', () => {
     fireEvent.click(likebutton)
     fireEvent.click(likebutton)
     expect(mockHandler).toHaveBeenCalledTimes(2)
+  })
+
+  test('form for creating a new blog works', () => {
+    const createBlog = jest.fn()
+    const component = render(
+      <BlogForm createBlog={createBlog}/>
+    )
+
+    const inputtitle = component.container.querySelector('#title')
+    const inputauthor = component.container.querySelector('#author')
+    const inputurl = component.container.querySelector('#url')
+    const form = component.container.querySelector('form')
+
+    fireEvent.change(inputauthor, { target: { value: 'nitish' } })
+    fireEvent.change(inputtitle, { target: { value: 'blogtitle' } })
+    fireEvent.change(inputurl, { target: { value: 'http//sad' } })
+    fireEvent.submit(form)
+
+    expect(createBlog).toHaveBeenCalledWith({ 'author': 'nitish', 'title': 'blogtitle', 'url': 'http//sad' })
   })
 })
